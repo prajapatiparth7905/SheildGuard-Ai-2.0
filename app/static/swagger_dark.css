@@ -1,0 +1,405 @@
+/* ShieldGuard AI - Swagger UI Ultra Modern Cyber Dark Theme */
+
+:root {
+  --sw-bg-primary: #0b0f19;
+  --sw-bg-secondary: #111827;
+  --sw-bg-card: #1e293b;
+  --sw-bg-card-hover: #26334d;
+  --sw-bg-input: #1e293b;
+  --sw-text-main: #f8fafc;
+  --sw-text-muted: #94a3b8;
+  --sw-border: #334155;
+  --sw-accent-blue: #3b82f6;
+  --sw-accent-cyan: #06b6d4;
+  --sw-accent-green: #10b981;
+  --sw-accent-orange: #f97316;
+  --sw-accent-red: #ef4444;
+  --sw-code-bg: #090d16;
+}
+
+body {
+  background-color: var(--sw-bg-primary) !important;
+  color: var(--sw-text-main) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Header & Topbar */
+.swagger-ui .topbar {
+  background-color: #090d16 !important;
+  border-bottom: 1px solid var(--sw-border) !important;
+  padding: 14px 20px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.swagger-ui .topbar .topbar-wrapper {
+  max-width: 1200px;
+}
+
+.swagger-ui .topbar a {
+  color: #60a5fa !important;
+  font-weight: 700 !important;
+}
+
+/* Info Section */
+.swagger-ui .info {
+  margin: 30px 0 !important;
+}
+
+.swagger-ui .info .title {
+  color: #f8fafc !important;
+  font-weight: 800 !important;
+  font-size: 32px !important;
+  letter-spacing: -0.5px !important;
+}
+
+.swagger-ui .info p,
+.swagger-ui .info li,
+.swagger-ui .info table {
+  color: var(--sw-text-muted) !important;
+  font-size: 14px !important;
+}
+
+.swagger-ui .info a {
+  color: var(--sw-accent-blue) !important;
+  text-decoration: none !important;
+}
+
+.swagger-ui .info a:hover {
+  text-decoration: underline !important;
+}
+
+.swagger-ui .info .base-url {
+  color: var(--sw-accent-cyan) !important;
+  font-family: ui-monospace, SFMono-Regular, monospace !important;
+  background: var(--sw-bg-card) !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--sw-border) !important;
+}
+
+/* Scheme Container */
+.swagger-ui .scheme-container {
+  background: var(--sw-bg-secondary) !important;
+  border-top: 1px solid var(--sw-border) !important;
+  border-bottom: 1px solid var(--sw-border) !important;
+  box-shadow: none !important;
+  padding: 16px 0 !important;
+  margin-bottom: 24px !important;
+}
+
+.swagger-ui .schemes > label {
+  color: var(--sw-text-muted) !important;
+  font-weight: 600 !important;
+}
+
+.swagger-ui select {
+  background-color: var(--sw-bg-input) !important;
+  color: var(--sw-text-main) !important;
+  border: 1px solid var(--sw-border) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+}
+
+/* Tag Sections */
+.swagger-ui .opblock-tag {
+  color: #f8fafc !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  border-bottom: 1px solid var(--sw-border) !important;
+  margin: 24px 0 12px 0 !important;
+  padding-bottom: 8px !important;
+}
+
+.swagger-ui .opblock-tag small {
+  color: var(--sw-text-muted) !important;
+}
+
+.swagger-ui .opblock-tag:hover {
+  background: transparent !important;
+}
+
+/* Operation Blocks (Endpoints) */
+.swagger-ui .opblock {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  margin-bottom: 14px !important;
+  border: 1px solid var(--sw-border) !important;
+  background: var(--sw-bg-secondary) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.swagger-ui .opblock:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Method Badges */
+.swagger-ui .opblock .opblock-summary {
+  padding: 10px 16px !important;
+  border-radius: 10px !important;
+}
+
+.swagger-ui .opblock-summary-method {
+  border-radius: 6px !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  min-width: 75px !important;
+  text-align: center !important;
+  text-shadow: none !important;
+}
+
+/* POST */
+.swagger-ui .opblock.opblock-post {
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  background: rgba(30, 41, 59, 0.6) !important;
+}
+.swagger-ui .opblock.opblock-post .opblock-summary {
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+.swagger-ui .opblock.opblock-post .opblock-summary-method {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+/* GET */
+.swagger-ui .opblock.opblock-get {
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  background: rgba(30, 41, 59, 0.6) !important;
+}
+.swagger-ui .opblock.opblock-get .opblock-summary {
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+  background: #10b981 !important;
+  color: #ffffff !important;
+}
+
+/* DELETE */
+.swagger-ui .opblock.opblock-delete {
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  background: rgba(30, 41, 59, 0.6) !important;
+}
+.swagger-ui .opblock.opblock-delete .opblock-summary-method {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+.swagger-ui .opblock .opblock-summary-path {
+  color: #f8fafc !important;
+  font-weight: 700 !important;
+  font-family: ui-monospace, SFMono-Regular, monospace !important;
+  font-size: 14px !important;
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+  color: var(--sw-text-muted) !important;
+  font-size: 13px !important;
+}
+
+/* Operation Body (Expanded Details) */
+.swagger-ui .opblock-body {
+  background: var(--sw-bg-primary) !important;
+  border-radius: 0 0 10px 10px !important;
+  padding: 18px 22px !important;
+}
+
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper p,
+.swagger-ui .opblock-title_normal p {
+  color: var(--sw-text-main) !important;
+}
+
+.swagger-ui .opblock-section-header {
+  background: var(--sw-bg-card) !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  box-shadow: none !important;
+}
+
+.swagger-ui .opblock-section-header h4 {
+  color: #f8fafc !important;
+  font-weight: 700 !important;
+}
+
+/* Parameters & Tables */
+.swagger-ui table thead tr th {
+  color: var(--sw-text-muted) !important;
+  border-bottom: 1px solid var(--sw-border) !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+}
+
+.swagger-ui table tbody tr td {
+  border-color: var(--sw-border) !important;
+  color: var(--sw-text-main) !important;
+}
+
+.swagger-ui .parameter__name {
+  color: #93c5fd !important;
+  font-family: ui-monospace, SFMono-Regular, monospace !important;
+  font-weight: 700 !important;
+}
+
+.swagger-ui .parameter__type {
+  color: var(--sw-accent-cyan) !important;
+  font-family: ui-monospace, SFMono-Regular, monospace !important;
+}
+
+.swagger-ui .parameter__in {
+  color: var(--sw-text-muted) !important;
+}
+
+/* Inputs & Textareas */
+.swagger-ui input[type=text],
+.swagger-ui input[type=password],
+.swagger-ui input[type=search],
+.swagger-ui textarea {
+  background: var(--sw-bg-input) !important;
+  color: var(--sw-text-main) !important;
+  border: 1.5px solid var(--sw-border) !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-family: ui-monospace, SFMono-Regular, monospace !important;
+}
+
+.swagger-ui input[type=text]:focus,
+.swagger-ui textarea:focus {
+  border-color: var(--sw-accent-blue) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+  outline: none !important;
+}
+
+/* Response Section */
+.swagger-ui .responses-inner {
+  background: var(--sw-bg-secondary) !important;
+  border-radius: 8px !important;
+  padding: 14px !important;
+  border: 1px solid var(--sw-border) !important;
+}
+
+.swagger-ui .responses-table {
+  background: transparent !important;
+}
+
+.swagger-ui .response-col_status {
+  color: #34d399 !important;
+  font-weight: 800 !important;
+  font-family: ui-monospace, SFMono-Regular, monospace !important;
+}
+
+.swagger-ui .response-col_description {
+  color: var(--sw-text-main) !important;
+}
+
+/* Code & Highlight Blocks */
+.swagger-ui .highlight-code,
+.swagger-ui .microlight,
+.swagger-ui pre {
+  background: var(--sw-code-bg) !important;
+  color: #38bdf8 !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--sw-border) !important;
+  font-family: ui-monospace, SFMono-Regular, monospace !important;
+}
+
+.swagger-ui .model-example {
+  background: var(--sw-code-bg) !important;
+  padding: 10px !important;
+  border-radius: 6px !important;
+}
+
+/* Model Box (Schemas) */
+.swagger-ui section.models {
+  border: 1px solid var(--sw-border) !important;
+  border-radius: 10px !important;
+  background: var(--sw-bg-secondary) !important;
+}
+
+.swagger-ui section.models h4 {
+  color: #f8fafc !important;
+  border-bottom: 1px solid var(--sw-border) !important;
+}
+
+.swagger-ui section.models .model-container {
+  background: var(--sw-bg-card) !important;
+  border-radius: 8px !important;
+  margin: 10px 0 !important;
+  border: 1px solid var(--sw-border) !important;
+}
+
+.swagger-ui .model-title {
+  color: #60a5fa !important;
+  font-weight: 700 !important;
+}
+
+.swagger-ui .model {
+  color: #e2e8f0 !important;
+}
+
+.swagger-ui .prop-type {
+  color: var(--sw-accent-cyan) !important;
+}
+
+.swagger-ui .prop-format {
+  color: var(--sw-text-muted) !important;
+}
+
+/* Buttons */
+.swagger-ui .btn {
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  border: 1px solid var(--sw-border) !important;
+  background: var(--sw-bg-card) !important;
+  color: #f8fafc !important;
+  transition: all 0.2s ease !important;
+  box-shadow: none !important;
+}
+
+.swagger-ui .btn:hover {
+  background: var(--sw-bg-card-hover) !important;
+  border-color: var(--sw-accent-blue) !important;
+  color: #60a5fa !important;
+}
+
+.swagger-ui .btn.execute {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4) !important;
+}
+
+.swagger-ui .btn.execute:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  transform: translateY(-1px) !important;
+}
+
+.swagger-ui .btn.cancel {
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: #f87171 !important;
+}
+
+.swagger-ui .try-out__btn {
+  background: var(--sw-bg-card) !important;
+  border: 1px solid var(--sw-border) !important;
+  color: #60a5fa !important;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sw-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sw-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

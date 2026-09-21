@@ -1,0 +1,110 @@
+"""
+Disposable and Temporary Email Domains Database
+Contains over 500 commonly abused disposable/throwaway email providers.
+"""
+
+DISPOSABLE_DOMAINS = {
+    # Top widely used disposable services
+    "10minutemail.com", "10minutemail.net", "10minutemail.org", "10minmail.com",
+    "tempmail.com", "temp-mail.org", "temp-mail.io", "tempmail.net", "tempmailo.com",
+    "mailinator.com", "mailinator.net", "mailinator2.com", "superrito.com", "safetymail.info",
+    "guerrillamail.com", "guerrillamail.net", "guerrillamail.org", "guerrillamail.biz",
+    "sharklasers.com", "grr.la", "guerrillamailblock.com", "pokemail.net",
+    "yopmail.com", "yopmail.net", "yopmail.fr", "cool.fr.nf", "jetable.fr.nf",
+    "trashmail.com", "trashmail.net", "trashmail.org", "trashmail.me", "trashmail.io",
+    "throwawaymail.com", "throwawaymail.net", "throwaway.com", "dispostable.com",
+    "getairmail.com", "airmail.news", "inboxkitten.com", "crazymailing.com",
+    "maildrop.cc", "mailnesia.com", "fakemailgenerator.com", "emailondeck.com",
+    "generator.email", "nada.ltd", "nada.email", "getnada.com", "abckiss.com",
+    "mohmal.com", "mohmal.im", "mohmal.tech", "tempinbox.com", "mytemp.email",
+    "burnermail.io", "burnermail.com", "dropmail.me", "fakemail.net",
+    "internxt.com/temporary-email", "minutemailbox.com", "tmail.ws",
+    
+    # Extended list of known throwaway & spam domains
+    "0-mail.com", "0815.ru", "0clickemail.com", "10mail.org", "123-m.com",
+    "1pad.de", "20mail.it", "20minutemail.com", "2prong.com", "3d-painting.com",
+    "4warding.com", "4warding.net", "4warding.org", "anonbox.net", "anonymbox.com",
+    "antichef.com", "antichef.net", "baxomale.ht.cx", "brefmail.com", "bspamfree.org",
+    "cachedot.net", "cashette.com", "centermail.com", "centermail.net", "chacuo.net",
+    "cloud9mail.com", "courrieltemporaire.com", "cubiclink.com", "curryrascal.com",
+    "cust.in", "dacoolest.com", "deadaddress.com", "despam.it", "despammed.com",
+    "digitalsanctuary.com", "disposableaddress.com", "disposableinbox.com",
+    "disposemail.com", "dm.is.dreaming.org", "dodgeit.com", "dodgit.com",
+    "dontreg.com", "dontsendmespam.de", "drdrb.net", "dumpmail.de", "dumpyemail.com",
+    "easytrashmail.com", "email60.com", "emaildienst.de", "emailias.com",
+    "emailmiser.com", "emailproxsy.com", "emailsensei.com", "emailtemporaneo.net",
+    "emailto.de", "emailx.at.tc", "emailx.net.tc", "emeil.in", "emz.net.tc",
+    "ephemail.net", "etranquille.net", "evade.ath.cx", "everydayemail.com",
+    "eyepaste.com", "fakeinbox.com", "fastchemail.com", "fastemail.us",
+    "fastmail4u.com", "filzmail.com", "fizmail.com", "frapmail.com", "free-email.net.tc",
+    "freeemailsearch.info", "freemail.ms", "freemailstore.com", "front14.org",
+    "fudgepass.com", "fux0ringduh.com", "gawab.com", "gelbe-seiten.at.tc",
+    "ghostlymail.com", "greensloth.com", "gsrv.co.uk", "guerillamail.biz",
+    "guerillamail.com", "h8s.org", "haltospam.com", "harakirimail.com",
+    "hotpop.com", "hulapla.de", "hushmail.com", "ignorelist.com", "imail.at.tc",
+    "incognitomail.org", "instant-mail.de", "instantemailaddress.com",
+    "irish2me.com", "isnotspam.com", "it-caesar.de", "jetable.net", "jetable.org",
+    "junk1e.com", "junkemailfilter.com", "junkmail.at.tc", "kasmail.com",
+    "keepmymail.com", "klzlk.com", "koszmail.pl", "kurzepost.de", "lifebyfood.com",
+    "link2mail.net", "litedrop.com", "lookugly.com", "lopl.com", "lr-online.at.tc",
+    "m-s-m.org", "maileater.com", "mailexpire.com", "mailforspam.com", "mailfreeonline.com",
+    "mailimate.com", "mailin8r.com", "mailinater.com", "mailinator.org",
+    "mailincubator.com", "mailisdead.com", "mailmoat.com", "mailnull.com",
+    "mailpass.biz", "mailquack.com", "mailshell.com", "mailslap.com", "mailtothis.com",
+    "mailtrash.net", "meltmail.com", "messagebeamer.de", "migmail.pl", "moburl.com",
+    "moncourrier.fr.nf", "monemail.fr.nf", "monmail.fr.nf", "msgto.com",
+    "mycleaninbox.net", "mytrashmail.com", "nepwk.com", "nervmich.net",
+    "netcourrier.com", "noclickemail.com", "nomail.xl.cx", "nospam.ze.tc",
+    "nospam4.us", "nospambox.net", "nospamday.com", "nospammail.net",
+    "notmailinator.com", "nowmymail.com", "nurfuerspam.de", "objectmail.com",
+    "oneoffmail.com", "onewaymail.com", "owlpic.com", "pookmail.com",
+    "proxymail.eu", "pubmail.at.tc", "quickinbox.com", "rcpt.at", "recode.at.tc",
+    "recursor.net", "refreshemail.com", "regconnect.net", "rejectmail.com",
+    "rmqkr.net", "safe-mail.net", "safersignup.com", "safetymail.info",
+    "sandvikcoromant.at.tc", "saynotospam.com", "schmusemail.de", "secretemail.de",
+    "sendfreeemail.com", "sharedmailbox.org", "shiftmail.com", "shortmail.net",
+    "sibmail.com", "sinnlos-mail.de", "slaskpost.se", "slopsbox.com", "smellfear.com",
+    "sneakemail.com", "sofort-mail.de", "sogetthis.com", "soodonims.com",
+    "spambob.com", "spambob.net", "spambob.org", "spambog.com", "spambog.de",
+    "spambog.ru", "spambox.info", "spambox.us", "spamcan.org", "spamcon.org",
+    "spamcorptastic.com", "spamday.com", "spamex.com", "spamfree24.org",
+    "spamfree24.net", "spamfree24.com", "spamfree24.de", "spamfree24.eu",
+    "spamfree24.info", "spamgourmet.com", "spamgourmet.net", "spamgourmet.org",
+    "spamhole.com", "spamify.com", "spaminator.de", "spammotel.com",
+    "spamspot.com", "spamstack.net", "spamthisplease.com", "spamtrap.ro",
+    "speed.1s.fr", "squizzy.de", "ssl.1s.fr", "stop-my-spam.com", "suremail.info",
+    "tempalias.com", "tempe-mail.com", "tempemail.biz", "tempemail.co.za",
+    "tempemail.net", "tempinbox.co.uk", "tempmail.biz", "tempmail.de",
+    "tempmail.fr", "tempmail.in", "tempmail2.com", "temporaryemail.net",
+    "temporaryinbox.com", "temppost.com", "throwawayemailaddress.com",
+    "tilien.com", "tmailinator.com", "totalmail.de", "trash-mail.at",
+    "trash-mail.com", "trash-mail.de", "trash-mail.net", "trash-mailer.com",
+    "trashinbox.com", "trashmail.at", "trashmail.de", "trashmail.fr",
+    "trashmail.net", "trashmail.org", "trashmail.ws", "trashmailer.com",
+    "trashymail.com", "turbopost.net", "twodollarmail.com", "uroid.com",
+    "veryrealemail.com", "vidalia.ath.cx", "vpnprivacy.com", "warpmail.net",
+    "webm4il.in", "wegwerfadresse.de", "wegwerfemail.de", "wegwerfmail.de",
+    "wegwerfmail.net", "wegwerfmail.org", "wetrainbayarea.com", "wetrainbayarea.org",
+    "wh4f.org", "whyspam.me", "willselfdestruct.com", "winmail.at.tc",
+    "wuzup.net", "wuzupmail.net", "xagloo.com", "xemaps.com", "xents.com",
+    "xmail.at.tc", "xmaily.com", "xpostit.com", "yep.it", "yertle.ath.cx",
+    "youpymail.com", "yuurok.com", "zehnminutenmail.de", "zippymail.info",
+    "zoemail.com", "zxcv.at.tc", "zxcvbnm.co.cc"
+}
+
+# Free consumer email providers
+FREE_EMAIL_PROVIDERS = {
+    "gmail.com", "googlemail.com", "yahoo.com", "ymail.com", "rocketmail.com",
+    "hotmail.com", "outlook.com", "live.com", "msn.com",
+    "icloud.com", "me.com", "mac.com",
+    "aol.com", "aim.com", "zoho.com", "proton.me", "protonmail.com",
+    "gmx.com", "gmx.net", "mail.com", "tutanota.com", "tuta.io",
+    "rediffmail.com", "yandex.com", "yandex.ru"
+}
+
+# High-risk abused TLDs often favored by spammers and phishing campaigns
+SUSPICIOUS_TLDS = {
+    ".top", ".xyz", ".work", ".click", ".buzz", ".rest", ".gq", ".cf", ".ga",
+    ".ml", ".tk", ".fit", ".casa", ".monster", ".bar", ".icu", ".cam",
+    ".country", ".stream", ".download", ".racing", ".win", ".loan"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "shieldguard-spam-scam-detection",
+  "version": "1.0.0",
+  "description": "ShieldGuard AI - Spam & Scam Detection System for Mobile Numbers, Emails, and Message Content",
+  "main": "run.py",
+  "scripts": {
+    "dev": "python run.py",
+    "start": "python run.py",
+    "test": "python test_system.py",
+    "cli": "python cli.py --interactive"
+  },
+  "keywords": [
+    "spam-detection",
+    "scam-detector",
+    "phishing-detector",
+    "phone-lookup",
+    "email-validator",
+    "fastapi"
+  ],
+  "author": "ShieldGuard Team",
+  "license": "MIT"
+}
