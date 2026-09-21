@@ -5,8 +5,20 @@
 // Global State
 let latestBulkResults = [];
 
+// API Endpoint & Connectivity Helper
+function getApiBase() {
+  return (localStorage.getItem("shieldguard_api_base") || "").trim().replace(/\/+$/, "");
+}
+
+async function apiFetch(endpoint, options = {}) {
+  const base = getApiBase();
+  const url = base ? `${base}${endpoint}` : endpoint;
+  return fetch(url, options);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
+  initApiConfig();
   initTabs();
   initStats();
   initPhoneScanner();
@@ -58,6 +70,72 @@ function initTheme() {
 }
 
 // ==========================================================================
+// API Endpoint Configuration Modal Handler
+// ==========================================================================
+function initApiConfig() {
+  const modal = document.getElementById("apiConfigModal");
+  const openBtn = document.getElementById("apiConfigBtn");
+  const closeBtn = document.getElementById("closeApiModalBtn");
+  const saveBtn = document.getElementById("saveApiUrlBtn");
+  const resetBtn = document.getElementById("resetApiUrlBtn");
+  const input = document.getElementById("apiBaseUrlInput");
+  const docsLink = document.getElementById("apiDocsLink");
+
+  const currentBase = getApiBase();
+  if (docsLink && currentBase) {
+    docsLink.href = `${currentBase}/docs`;
+  }
+
+  if (openBtn && modal) {
+    openBtn.addEventListener("click", () => {
+      if (input) input.value = getApiBase();
+      modal.style.display = "flex";
+    });
+  }
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener("click", e => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+  }
+
+  if (saveBtn) {
+    saveBtn.addEventListener("click", () => {
+      const val = input ? input.value.trim().replace(/\/+$/, "") : "";
+      if (val) {
+        localStorage.setItem("shieldguard_api_base", val);
+        showToast("Backend API URL set to: " + val);
+      } else {
+        localStorage.removeItem("shieldguard_api_base");
+        showToast("Backend API reset to same-origin / local server.");
+      }
+      if (docsLink) {
+        docsLink.href = val ? `${val}/docs` : "/docs";
+      }
+      if (modal) modal.style.display = "none";
+      initStats();
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      localStorage.removeItem("shieldguard_api_base");
+      if (input) input.value = "";
+      if (docsLink) docsLink.href = "/docs";
+      showToast("Reset to default same-origin backend.");
+      if (modal) modal.style.display = "none";
+      initStats();
+    });
+  }
+}
+
+// ==========================================================================
 // Tab Navigation
 // ==========================================================================
 function initTabs() {
@@ -84,7 +162,7 @@ function initTabs() {
 // ==========================================================================
 async function initStats() {
   try {
-    const res = await fetch("/api/stats");
+    const res = await apiFetch("/api/stats");
     if (!res.ok) return;
     const data = await res.json();
     const scansEl = document.getElementById("statTotalScans");
@@ -207,7 +285,7 @@ function initPhoneScanner() {
     submitBtn.innerHTML = "Scanning Phone Intelligence...";
 
     try {
-      const res = await fetch("/api/check/phone", {
+      const res = await apiFetch("/api/check/phone", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -273,7 +351,7 @@ function initEmailScanner() {
     submitBtn.innerHTML = "Analyzing Domain & DNS...";
 
     try {
-      const res = await fetch("/api/check/email", {
+      const res = await apiFetch("/api/check/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -338,7 +416,7 @@ function initContentScanner() {
     submitBtn.innerHTML = "Scanning Content Patterns...";
 
     try {
-      const res = await fetch("/api/check/content", {
+      const res = await apiFetch("/api/check/content", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: text })
@@ -395,7 +473,7 @@ function initCombinedScanner() {
     submitBtn.innerHTML = "Executing 360° Threat Scan...";
 
     try {
-      const res = await fetch("/api/check/combined", {
+      const res = await apiFetch("/api/check/combined", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -458,7 +536,7 @@ function initBulkScanner() {
     submitBtn.innerHTML = `Batch Processing ${rawLines.length} Items...`;
 
     try {
-      const res = await fetch("/api/check/bulk", {
+      const res = await apiFetch("/api/check/bulk", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: rawLines })
@@ -530,7 +608,7 @@ function initScamReports() {
     if (!feed) return;
     try {
       const url = searchQuery ? `/api/reports?search=${encodeURIComponent(searchQuery)}` : "/api/reports";
-      const res = await fetch(url);
+      const res = await apiFetch(url);
       if (!res.ok) return;
       const reports = await res.json();
 
@@ -596,7 +674,7 @@ function initScamReports() {
       };
 
       try {
-        const res = await fetch("/api/reports", {
+        const res = await apiFetch("/api/reports", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
@@ -620,7 +698,7 @@ function initScamReports() {
 // Global Upvote / Downvote Function
 window.voteReport = async function(reportId, isUpvote) {
   try {
-    const res = await fetch(`/api/reports/${reportId}/vote`, {
+    const res = await apiFetch(`/api/reports/${reportId}/vote`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ report_id: reportId, is_upvote: isUpvote })

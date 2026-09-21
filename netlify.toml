@@ -1,0 +1,26 @@
+# Netlify Configuration for ShieldGuard AI 2.0
+
+[build]
+  # Directory where the frontend static assets reside
+  publish = "app/static"
+
+# Redirect /static/* to root for full asset compatibility
+[[redirects]]
+  from = "/static/*"
+  to = "/:splat"
+  status = 200
+
+# Single Page Application routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

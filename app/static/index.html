@@ -31,7 +31,12 @@
           <span class="badge-dot"></span> Threat Shield Active
         </span>
 
-        <a href="/docs" target="_blank" class="btn-nav" title="Interactive Swagger REST API Documentation">
+        <button id="apiConfigBtn" class="btn-nav" title="Configure Backend API Endpoint">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          API Server
+        </button>
+
+        <a href="/docs" id="apiDocsLink" target="_blank" class="btn-nav" title="Interactive Swagger REST API Documentation">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
           API Docs
         </a>
@@ -613,6 +618,29 @@
             <!-- Populated via JavaScript -->
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Endpoint Configuration Modal -->
+  <div id="apiConfigModal" class="modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; max-width: 500px; width: 90%; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="margin: 0; font-size: 18px; display: flex; align-items: center; gap: 8px;">
+          ⚙️ Backend API Endpoint
+        </h3>
+        <button id="closeApiModalBtn" style="background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer;">&times;</button>
+      </div>
+      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5;">
+        Specify the live backend API URL (e.g. deployed on Render, Railway, or Fly.io). Leave empty to use local / same-origin server.
+      </p>
+      <div class="form-group" style="margin-bottom: 16px;">
+        <label style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; display: block;">API Base URL</label>
+        <input type="url" id="apiBaseUrlInput" class="input-box" placeholder="https://your-backend.onrender.com (or leave blank for same origin)" style="width: 100%;">
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button id="resetApiUrlBtn" class="btn-nav" style="padding: 8px 16px;">Reset Default</button>
+        <button id="saveApiUrlBtn" class="btn-primary" style="padding: 8px 20px;">Save & Reconnect</button>
       </div>
     </div>
   </div>
