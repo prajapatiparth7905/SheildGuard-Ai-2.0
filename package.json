@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "python run.py",
     "start": "python run.py",
+    "build": "echo 'Static build ready'",
     "test": "python test_system.py",
     "cli": "python cli.py --interactive"
   },

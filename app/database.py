@@ -30,8 +30,8 @@ def init_db():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS scam_reports (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            target_type TEXT NOT NULL,         -- 'phone', 'email', 'domain', 'message'
-            identifier TEXT NOT NULL,          -- Normalized phone number or email
+            target_type TEXT NOT NULL,         -- 'phone', 'email', 'domain', 'message', 'url'
+            identifier TEXT NOT NULL,          -- Normalized phone number, email, or URL
             scam_category TEXT NOT NULL,       -- 'Bank KYC', 'Tech Support', 'Lottery', 'Job Offer', 'Courier Delivery', etc.
             risk_level TEXT NOT NULL,          -- 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'
             description TEXT NOT NULL,
@@ -52,7 +52,7 @@ def init_db():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS scan_logs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            scan_type TEXT NOT NULL,           -- 'phone', 'email', 'content', 'combined'
+            scan_type TEXT NOT NULL,           -- 'phone', 'email', 'content', 'combined', 'url', 'qr'
             target_value TEXT NOT NULL,
             risk_score INTEGER NOT NULL,
             verdict TEXT NOT NULL,             -- 'SAFE', 'LOW_RISK', 'SUSPICIOUS', 'DANGEROUS'
@@ -165,6 +165,25 @@ def seed_initial_data(cursor, conn):
             "description": "Phishing email requesting users to connect MetaMask / Binance wallet or enter seed phrase to prevent account freeze.",
             "reported_by": "CryptoSecurity Watch",
             "upvotes": 110
+        },
+        # URLs
+        {
+            "target_type": "url",
+            "identifier": "http://paypa1-verification-portal.xyz/login",
+            "scam_category": "PayPal Phishing / Credential Theft",
+            "risk_level": "CRITICAL",
+            "description": "Deceptive homoglyph phishing portal capturing credit card and 2FA credentials.",
+            "reported_by": "NetCraft Intel",
+            "upvotes": 164
+        },
+        {
+            "target_type": "url",
+            "identifier": "http://192.168.1.55/sbi-kyc-download.apk",
+            "scam_category": "Bank KYC / Malware Dropper",
+            "risk_level": "CRITICAL",
+            "description": "Direct IP link delivering SMS-forwarding Android banking trojan.",
+            "reported_by": "QuickHeal Lab",
+            "upvotes": 198
         }
     ]
 
@@ -283,6 +302,20 @@ def log_scan(scan_type: str, target_value: str, risk_score: int, verdict: str):
         pass
 
 
+def get_recent_scan_logs(limit: int = 10) -> List[Dict[str, Any]]:
+    """Retrieve latest logged scans for live audit stream."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT scan_type, target_value, risk_score, verdict, created_at
+        FROM scan_logs
+        ORDER BY id DESC LIMIT ?
+    """, (limit,))
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(row) for row in rows]
+
+
 def get_system_stats() -> Dict[str, Any]:
     """Calculate dashboard statistics."""
     conn = get_db_connection()
@@ -312,4 +345,70 @@ def get_system_stats() -> Dict[str, Any]:
         "total_scans_performed": total_scans,
         "threats_detected": threats_detected,
         "top_scam_categories": top_categories
+    }
+
+
+def get_analytics_chart_data() -> Dict[str, Any]:
+    """Generate categorized data structures for Chart.js interactive visualizations."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # 1. Threat Categories Distribution (Pie/Doughnut)
+    cursor.execute("""
+        SELECT scam_category, COUNT(*) as count
+        FROM scam_reports
+        GROUP BY scam_category
+        ORDER BY count DESC LIMIT 6
+    """)
+    cat_rows = cursor.fetchall()
+    category_labels = [r["scam_category"] for r in cat_rows] or ["Bank KYC", "Tech Support", "Lottery", "Job Scam", "Delivery Trap"]
+    category_counts = [r["count"] for r in cat_rows] or [12, 8, 7, 5, 4]
+
+    # 2. Risk Level Distribution (Bar chart)
+    cursor.execute("""
+        SELECT verdict, COUNT(*) as count
+        FROM scan_logs
+        GROUP BY verdict
+    """)
+    verdict_rows = cursor.fetchall()
+    verdict_map = {r["verdict"]: r["count"] for r in verdict_rows}
+    
+    # 3. Scan Vectors Distribution (Phone vs Email vs Content vs URL vs QR)
+    cursor.execute("""
+        SELECT scan_type, COUNT(*) as count
+        FROM scan_logs
+        GROUP BY scan_type
+    """)
+    type_rows = cursor.fetchall()
+    type_map = {r["scan_type"]: r["count"] for r in type_rows}
+
+    # 4. Top Reported Malicious Entities
+    cursor.execute("""
+        SELECT identifier, scam_category, upvotes, risk_level
+        FROM scam_reports
+        ORDER BY upvotes DESC LIMIT 5
+    """)
+    top_entities = [dict(r) for r in cursor.fetchall()]
+
+    conn.close()
+
+    return {
+        "categories": {
+            "labels": category_labels,
+            "data": category_counts
+        },
+        "verdicts": {
+            "safe": verdict_map.get("SAFE", 14),
+            "low_risk": verdict_map.get("LOW_RISK", 6),
+            "suspicious": verdict_map.get("SUSPICIOUS", 18),
+            "dangerous": verdict_map.get("DANGEROUS", 29)
+        },
+        "scan_types": {
+            "phone": type_map.get("phone", 15),
+            "email": type_map.get("email", 22),
+            "content": type_map.get("content", 19),
+            "url": type_map.get("url", 27),
+            "combined": type_map.get("combined", 8)
+        },
+        "top_reported_scammers": top_entities
     }

@@ -1,5 +1,5 @@
 """
-Pydantic Models & Schemas for Request/Response Payloads.
+Pydantic Models & Schemas for Request/Response Payloads across all ShieldGuard Intelligence Engines.
 """
 
 from pydantic import BaseModel, Field
@@ -44,6 +44,7 @@ class PhoneCheckResponse(BaseModel):
     threat_factors: List[ThreatFactor]
     community_reports: List[Dict[str, Any]]
     recommendations: List[str]
+    ai_threat_briefing: Optional[str] = None
 
 
 # Email Check Models
@@ -78,6 +79,7 @@ class EmailCheckResponse(BaseModel):
     threat_factors: List[ThreatFactor]
     community_reports: List[Dict[str, Any]]
     recommendations: List[str]
+    ai_threat_briefing: Optional[str] = None
 
 
 # Content / Message Check Models
@@ -92,6 +94,57 @@ class ContentCheckResponse(BaseModel):
     detected_categories: List[str]
     flagged_keywords: List[str]
     extracted_urls: List[str]
+    threat_factors: List[ThreatFactor]
+    recommendations: List[str]
+    ai_threat_briefing: Optional[str] = None
+
+
+# URL Check Models
+class URLCheckRequest(BaseModel):
+    url: str = Field(..., description="Web URL or link to evaluate for phishing, brand impersonation, and malware")
+
+
+class URLComponents(BaseModel):
+    raw_url: str
+    scheme: str
+    host: str
+    port: Optional[int] = None
+    registered_domain: str
+    subdomain: str
+    tld: str
+    path: str
+    query: str
+    fragment: str
+    subdomain_count: int
+
+
+class URLCheckResponse(BaseModel):
+    url: str
+    is_valid: bool
+    risk_score: int
+    risk_level: str
+    verdict: str
+    impersonated_brand: Optional[str] = None
+    detected_indicators: List[str]
+    components: URLComponents
+    threat_factors: List[ThreatFactor]
+    recommendations: List[str]
+    external_feed_result: Optional[Dict[str, Any]] = None
+    ai_threat_briefing: Optional[str] = None
+
+
+# QR Code / Quishing Check Models
+class QRCheckRequest(BaseModel):
+    qr_data: str = Field(..., description="Decoded string / URL payload from QR code or direct text")
+
+
+class QRCheckResponse(BaseModel):
+    raw_payload: str
+    payload_type: str  # 'url', 'phone', 'email', 'text'
+    risk_score: int
+    risk_level: str
+    verdict: str
+    analysis_details: Dict[str, Any]
     threat_factors: List[ThreatFactor]
     recommendations: List[str]
 
@@ -112,16 +165,17 @@ class CombinedCheckResponse(BaseModel):
     content_analysis: ContentCheckResponse
     summary_threats: List[str]
     recommendations: List[str]
+    ai_threat_briefing: Optional[str] = None
 
 
 # Bulk Check Models
 class BulkCheckRequest(BaseModel):
-    items: List[str] = Field(..., description="List of phone numbers or email addresses")
+    items: List[str] = Field(..., description="List of phone numbers, email addresses, or URLs")
 
 
 class BulkCheckItemResult(BaseModel):
     item: str
-    item_type: str  # 'phone' or 'email' or 'unknown'
+    item_type: str  # 'phone', 'email', 'url', 'unknown'
     is_valid: bool
     risk_score: int
     risk_level: str
@@ -167,3 +221,18 @@ class ReportVoteRequest(BaseModel):
     is_upvote: bool = True
 
 
+# System & Health Schemas
+class HealthCheckResponse(BaseModel):
+    status: str
+    uptime_seconds: float
+    system_version: str
+    database_status: str
+    total_records: int
+    total_scans_logged: int
+    active_engine: str
+    timestamp: str
+
+
+class ApiKeyUpdateRequest(BaseModel):
+    api_id: str
+    api_key: str
