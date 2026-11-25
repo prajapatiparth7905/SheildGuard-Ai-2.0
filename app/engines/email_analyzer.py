@@ -9,6 +9,7 @@ from email_validator import validate_email, EmailNotValidError
 from typing import Dict, Any, List, Optional, Tuple
 from app.data.disposable_domains import DISPOSABLE_DOMAINS, FREE_EMAIL_PROVIDERS, SUSPICIOUS_TLDS
 from app.data.brand_patterns import TARGET_BRANDS, PHISHING_DOMAIN_KEYWORDS, HOMOGLYPHS
+from app.engines.ml_engine import predict_email_ml
 from app.database import check_scam_database, log_scan
 
 
@@ -245,6 +246,22 @@ def analyze_email_address(raw_email: str, perform_dns_check: bool = True) -> Dic
         })
         recommendations.append(f"Email reported for '{top_report.get('scam_category')}'. Block sender and report as phishing.")
 
+    # 8. Machine Learning Address Classification
+    ml_result = predict_email_ml(cleaned)
+    ml_prob = ml_result.get("phishing_probability", 0.0)
+    if ml_result.get("model_available"):
+        if ml_prob >= 65.0:
+            ml_impact = int(ml_prob * 0.3)
+            base_risk += ml_impact
+            threat_factors.append({
+                "name": f"AI Email Threat Classifier ({ml_prob:.1f}% Phishing Probability)",
+                "severity": "CRITICAL" if ml_prob >= 85.0 else "HIGH",
+                "description": f"Vectorized Machine Learning classifier evaluated structural domain and local-part features and flagged address as deceptive ({ml_prob:.1f}% confidence).",
+                "impact_score": ml_impact
+            })
+        elif ml_prob <= 25.0 and base_risk < 30:
+            base_risk = max(0, base_risk - 10)
+
     # Calculate Final Risk Score (capped 0-100)
     risk_score = min(100, max(0, base_risk))
 
@@ -296,5 +313,6 @@ def analyze_email_address(raw_email: str, perform_dns_check: bool = True) -> Dic
         },
         "threat_factors": threat_factors,
         "community_reports": community_reports,
-        "recommendations": recommendations
+        "recommendations": recommendations,
+        "ml_analysis": ml_result
     }

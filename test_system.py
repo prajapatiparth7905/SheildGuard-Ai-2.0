@@ -12,6 +12,7 @@ from app.engines.phone_analyzer import analyze_phone_number
 from app.engines.email_analyzer import analyze_email_address
 from app.engines.content_analyzer import analyze_message_content
 from app.engines.url_analyzer import analyze_url_threat
+from app.engines.ml_engine import predict_url_ml, predict_content_ml, predict_email_ml
 from app.main import app
 
 
@@ -116,6 +117,42 @@ class TestShieldGuardSystem(unittest.TestCase):
         self.assertTrue(any(a["id"] == "builtin_heuristics" for a in apis))
         self.assertTrue(any(a["id"] == "google_safe_browsing" for a in apis))
         self.assertTrue(any(a["id"] == "virustotal" for a in apis))
+
+    def test_ml_url_phishing_model(self):
+        """Test ML URL model inference and probability output."""
+        phish_res = predict_url_ml("http://paypal.com.account-verification-service.xyz/login.php")
+        self.assertTrue(phish_res["model_available"])
+        self.assertEqual(phish_res["prediction"], "PHISHING")
+        self.assertGreaterEqual(phish_res["phishing_probability"], 75.0)
+
+        safe_res = predict_url_ml("https://www.google.com/search?q=cybersecurity")
+        self.assertTrue(safe_res["model_available"])
+        self.assertEqual(safe_res["prediction"], "LEGITIMATE")
+
+    def test_ml_content_nlp_model(self):
+        """Test NLP TF-IDF text classification on social engineering SMS."""
+        spam_res = predict_content_ml("Dear customer, your SBI account has been locked. Click here to verify KYC immediately.")
+        self.assertTrue(spam_res["model_available"])
+        self.assertEqual(spam_res["prediction"], "PHISHING")
+        self.assertGreaterEqual(spam_res["phishing_probability"], 80.0)
+
+        ham_res = predict_content_ml("Hey, are you free for lunch today at 1 PM?")
+        self.assertTrue(ham_res["model_available"])
+        self.assertEqual(ham_res["prediction"], "LEGITIMATE")
+
+    def test_ml_email_threat_model(self):
+        """Test ML classification on disposable and spoofed email."""
+        bad_email = predict_email_ml("user98421@mailinator.com")
+        self.assertTrue(bad_email["model_available"])
+        self.assertEqual(bad_email["prediction"], "PHISHING")
+
+    def test_sample_datasets_exist(self):
+        """Verify that offline datasets and sample test inputs exist and are populated."""
+        data_dir = os.path.join(os.path.dirname(__file__), "data", "datasets")
+        self.assertTrue(os.path.exists(os.path.join(data_dir, "sms_spam_dataset.csv")))
+        self.assertTrue(os.path.exists(os.path.join(data_dir, "url_phishing_dataset.csv")))
+        self.assertTrue(os.path.exists(os.path.join(data_dir, "sample_test_inputs.json")))
+        self.assertTrue(os.path.exists(os.path.join(data_dir, "sample_test_inputs.csv")))
 
 
 if __name__ == "__main__":

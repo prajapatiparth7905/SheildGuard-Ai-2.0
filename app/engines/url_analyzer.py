@@ -10,6 +10,7 @@ from typing import Dict, Any, List, Optional, Tuple
 from app.data.brand_patterns import TARGET_BRANDS, PHISHING_DOMAIN_KEYWORDS, HOMOGLYPHS
 from app.data.disposable_domains import SUSPICIOUS_TLDS
 from app.engines.email_analyzer import normalize_homoglyphs, levenshtein_distance
+from app.engines.ml_engine import predict_url_ml
 from app.database import log_scan
 
 # Common URL Shorteners
@@ -282,6 +283,24 @@ def analyze_url_threat(url: str) -> Dict[str, Any]:
             "impact_score": 20
         })
 
+    # 10. Machine Learning Feature-Based Phishing Classifier
+    ml_result = predict_url_ml(cleaned_url)
+    ml_prob = ml_result.get("phishing_probability", 0.0)
+    if ml_result.get("model_available"):
+        if ml_prob >= 75.0:
+            ml_impact = int(ml_prob * 0.35)
+            base_risk += ml_impact
+            detected_indicators.append(f"AI ML Model ({ml_prob:.1f}%)")
+            threat_factors.append({
+                "name": f"AI Machine Learning Threat Classification ({ml_prob:.1f}%)",
+                "severity": "CRITICAL" if ml_prob >= 90.0 else "HIGH",
+                "description": f"Vectorized Machine Learning classifier evaluated 18 lexical and structural features and flagged URL as malicious phishing ({ml_prob:.1f}% confidence).",
+                "impact_score": ml_impact
+            })
+        elif ml_prob <= 25.0 and base_risk < 35:
+            # Verified safe patterns by ML calibration
+            base_risk = max(0, base_risk - 10)
+
     # Calculate final risk score
     risk_score = min(100, max(0, base_risk))
 
@@ -324,5 +343,6 @@ def analyze_url_threat(url: str) -> Dict[str, Any]:
         "detected_indicators": detected_indicators,
         "components": components,
         "threat_factors": threat_factors,
-        "recommendations": recommendations
+        "recommendations": recommendations,
+        "ml_analysis": ml_result
     }

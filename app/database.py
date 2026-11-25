@@ -316,6 +316,19 @@ def get_recent_scan_logs(limit: int = 10) -> List[Dict[str, Any]]:
     return [dict(row) for row in rows]
 
 
+def clear_scan_logs() -> bool:
+    """Clear scan logs upon explicit user action."""
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM scan_logs")
+        conn.commit()
+        conn.close()
+        return True
+    except Exception:
+        return False
+
+
 def get_system_stats() -> Dict[str, Any]:
     """Calculate dashboard statistics."""
     conn = get_db_connection()

@@ -1,0 +1,193 @@
+{
+  "url_scanner_samples": [
+    {
+      "id": "url-01",
+      "label": "PHISHING",
+      "target": "http://paypal.com.account-verification-service.xyz/login.php",
+      "description": "Deceptive subdomain spoofing PayPal with suspicious .xyz TLD and login lure",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "url-02",
+      "label": "PHISHING",
+      "target": "http://192.168.1.55/sbi-kyc-download.apk",
+      "description": "Raw IP address link hosting Android banking malware dropper",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "url-03",
+      "label": "PHISHING",
+      "target": "https://micros0ft-online-security.net/auth/login",
+      "description": "Homoglyph character substitution (0 for o) targeting Microsoft",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "url-04",
+      "label": "LEGITIMATE",
+      "target": "https://www.google.com/search?q=cybersecurity+defense",
+      "description": "Clean authoritative Google search URL",
+      "expected_verdict": "SAFE"
+    },
+    {
+      "id": "url-05",
+      "label": "LEGITIMATE",
+      "target": "https://github.com/fastapi/fastapi",
+      "description": "Official GitHub open source repository link",
+      "expected_verdict": "SAFE"
+    }
+  ],
+  "content_scanner_samples": [
+    {
+      "id": "content-01",
+      "label": "PHISHING / SCAM",
+      "target": "Dear customer, your SBI account has been locked. Click http://sbi-kyc-update.xyz/verify to update PAN within 24 hours.",
+      "description": "Urgency manipulation with fake bank KYC suspension threat",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "content-02",
+      "label": "PHISHING / SCAM",
+      "target": "Congratulations! You have won $2,500,000 in Mega Millions lottery draw. Call +18765550199 or email claim@megawin-prize.click to claim.",
+      "description": "Fake prize lottery scam with advance fee request",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "content-03",
+      "label": "PHISHING / SCAM",
+      "target": "USPS: Your package could not be delivered due to incomplete address. Pay $1.99 redelivery fee at http://usps-redelivery.buzz/parcel immediately.",
+      "description": "Courier delivery clearance fee phishing trap",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "content-04",
+      "label": "LEGITIMATE",
+      "target": "Hi Sarah, our team meeting is scheduled for tomorrow at 10 AM in Conference Room B. Please find the agenda attached.",
+      "description": "Standard business workplace meeting message",
+      "expected_verdict": "SAFE"
+    },
+    {
+      "id": "content-05",
+      "label": "LEGITIMATE",
+      "target": "Your Amazon order #402-9817291 has shipped and will arrive Thursday. Track your package in the official app.",
+      "description": "Legitimate automated shipment notification",
+      "expected_verdict": "SAFE"
+    }
+  ],
+  "email_scanner_samples": [
+    {
+      "id": "email-01",
+      "label": "PHISHING / SPOOFED",
+      "target": "security@paypa1-update.com",
+      "description": "Homoglyph brand spoofing substituting 1 for l targeting PayPal",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "email-02",
+      "label": "DISPOSABLE / SUSPICIOUS",
+      "target": "user98421@mailinator.com",
+      "description": "Disposable burner inbox domain frequently abused by spammers",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "email-03",
+      "label": "FREE WEBMAIL SPOOF",
+      "target": "microsoft-support-team@gmail.com",
+      "description": "Free webmail address pretending to be official corporate IT department",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "email-04",
+      "label": "LEGITIMATE",
+      "target": "service@paypal.com",
+      "description": "Official authentic PayPal corporate email",
+      "expected_verdict": "SAFE"
+    },
+    {
+      "id": "email-05",
+      "label": "LEGITIMATE",
+      "target": "alex_student@stanford.edu",
+      "description": "Verified academic institution email address",
+      "expected_verdict": "SAFE"
+    }
+  ],
+  "phone_scanner_samples": [
+    {
+      "id": "phone-01",
+      "label": "SCAM / TOLL TRAP",
+      "target": "+18765550199",
+      "description": "High-risk Jamaica area code (+1-876) known for Mega Millions lottery traps",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "phone-02",
+      "label": "TECH SUPPORT SCAM",
+      "target": "+18005550143",
+      "description": "Toll-free 1-800 number reported for AnyDesk fake Windows Defender alerts",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "phone-03",
+      "label": "WANGIRI FRAUD",
+      "target": "+12845550188",
+      "description": "British Virgin Islands (+1-284) one-ring callback billing trap",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "phone-04",
+      "label": "LEGITIMATE",
+      "target": "+18002752273",
+      "description": "Official Apple Support toll-free contact number",
+      "expected_verdict": "SAFE"
+    },
+    {
+      "id": "phone-05",
+      "label": "LEGITIMATE",
+      "target": "+16502530000",
+      "description": "Official Google Headquarters landline in Mountain View, CA",
+      "expected_verdict": "SAFE"
+    }
+  ],
+  "qr_scanner_samples": [
+    {
+      "id": "qr-01",
+      "label": "QUISHING LINK",
+      "target": "http://paypa1-verification-portal.xyz/login",
+      "description": "QR code embedding malicious homoglyph credential harvesting URL",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "qr-02",
+      "label": "QUISHING CALL TRAP",
+      "target": "tel:+18765550199",
+      "description": "QR code initiating international toll fraud callback",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "qr-03",
+      "label": "LEGITIMATE QR LINK",
+      "target": "https://www.google.com",
+      "description": "QR code encoding safe standard URL",
+      "expected_verdict": "SAFE"
+    }
+  ],
+  "combined_multi_vector_samples": [
+    {
+      "id": "multi-01",
+      "label": "MULTI-VECTOR ATTACK",
+      "sender_phone": "+18765550199",
+      "sender_email": "security@paypa1-update.com",
+      "message_text": "URGENT: Your account has been suspended due to suspicious activity. Verify KYC immediately at http://paypa1-verification-portal.xyz/login to avoid permanent block.",
+      "description": "Coordinated campaign: Jamaican toll trap + homoglyph email + phishing URL",
+      "expected_verdict": "DANGEROUS"
+    },
+    {
+      "id": "multi-02",
+      "label": "CLEAN WORKPLACE NOTICE",
+      "sender_phone": "+16502530000",
+      "sender_email": "notifications@google.com",
+      "message_text": "Your weekly security summary is ready to review. Log in to your Google Admin console for details.",
+      "description": "Legitimate enterprise security summary from official channels",
+      "expected_verdict": "SAFE"
+    }
+  ]
+}

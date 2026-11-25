@@ -80,6 +80,7 @@ class EmailCheckResponse(BaseModel):
     community_reports: List[Dict[str, Any]]
     recommendations: List[str]
     ai_threat_briefing: Optional[str] = None
+    ml_analysis: Optional[Dict[str, Any]] = None
 
 
 # Content / Message Check Models
@@ -97,6 +98,7 @@ class ContentCheckResponse(BaseModel):
     threat_factors: List[ThreatFactor]
     recommendations: List[str]
     ai_threat_briefing: Optional[str] = None
+    ml_analysis: Optional[Dict[str, Any]] = None
 
 
 # URL Check Models
@@ -131,6 +133,7 @@ class URLCheckResponse(BaseModel):
     recommendations: List[str]
     external_feed_result: Optional[Dict[str, Any]] = None
     ai_threat_briefing: Optional[str] = None
+    ml_analysis: Optional[Dict[str, Any]] = None
 
 
 # QR Code / Quishing Check Models

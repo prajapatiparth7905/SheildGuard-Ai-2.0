@@ -1,0 +1,26 @@
+vector,id,label,target,expected_verdict,description
+url_scanner,url-01,PHISHING,http://paypal.com.account-verification-service.xyz/login.php,DANGEROUS,Deceptive subdomain spoofing PayPal with suspicious .xyz TLD and login lure
+url_scanner,url-02,PHISHING,http://192.168.1.55/sbi-kyc-download.apk,DANGEROUS,Raw IP address link hosting Android banking malware dropper
+url_scanner,url-03,PHISHING,https://micros0ft-online-security.net/auth/login,DANGEROUS,Homoglyph character substitution (0 for o) targeting Microsoft
+url_scanner,url-04,LEGITIMATE,https://www.google.com/search?q=cybersecurity+defense,SAFE,Clean authoritative Google search URL
+url_scanner,url-05,LEGITIMATE,https://github.com/fastapi/fastapi,SAFE,Official GitHub open source repository link
+content_scanner,content-01,PHISHING / SCAM,"Dear customer, your SBI account has been locked. Click http://sbi-kyc-update.xyz/verify to update PAN within 24 hours.",DANGEROUS,Urgency manipulation with fake bank KYC suspension threat
+content_scanner,content-02,PHISHING / SCAM,"Congratulations! You have won $2,500,000 in Mega Millions lottery draw. Call +18765550199 or email claim@megawin-prize.click to claim.",DANGEROUS,Fake prize lottery scam with advance fee request
+content_scanner,content-03,PHISHING / SCAM,USPS: Your package could not be delivered due to incomplete address. Pay $1.99 redelivery fee at http://usps-redelivery.buzz/parcel immediately.,DANGEROUS,Courier delivery clearance fee phishing trap
+content_scanner,content-04,LEGITIMATE,"Hi Sarah, our team meeting is scheduled for tomorrow at 10 AM in Conference Room B. Please find the agenda attached.",SAFE,Standard business workplace meeting message
+content_scanner,content-05,LEGITIMATE,Your Amazon order #402-9817291 has shipped and will arrive Thursday. Track your package in the official app.,SAFE,Legitimate automated shipment notification
+email_scanner,email-01,PHISHING / SPOOFED,security@paypa1-update.com,DANGEROUS,Homoglyph brand spoofing substituting 1 for l targeting PayPal
+email_scanner,email-02,DISPOSABLE / SUSPICIOUS,user98421@mailinator.com,DANGEROUS,Disposable burner inbox domain frequently abused by spammers
+email_scanner,email-03,FREE WEBMAIL SPOOF,microsoft-support-team@gmail.com,DANGEROUS,Free webmail address pretending to be official corporate IT department
+email_scanner,email-04,LEGITIMATE,service@paypal.com,SAFE,Official authentic PayPal corporate email
+email_scanner,email-05,LEGITIMATE,alex_student@stanford.edu,SAFE,Verified academic institution email address
+phone_scanner,phone-01,SCAM / TOLL TRAP,+18765550199,DANGEROUS,High-risk Jamaica area code (+1-876) known for Mega Millions lottery traps
+phone_scanner,phone-02,TECH SUPPORT SCAM,+18005550143,DANGEROUS,Toll-free 1-800 number reported for AnyDesk fake Windows Defender alerts
+phone_scanner,phone-03,WANGIRI FRAUD,+12845550188,DANGEROUS,British Virgin Islands (+1-284) one-ring callback billing trap
+phone_scanner,phone-04,LEGITIMATE,+18002752273,SAFE,Official Apple Support toll-free contact number
+phone_scanner,phone-05,LEGITIMATE,+16502530000,SAFE,"Official Google Headquarters landline in Mountain View, CA"
+qr_scanner,qr-01,QUISHING LINK,http://paypa1-verification-portal.xyz/login,DANGEROUS,QR code embedding malicious homoglyph credential harvesting URL
+qr_scanner,qr-02,QUISHING CALL TRAP,tel:+18765550199,DANGEROUS,QR code initiating international toll fraud callback
+qr_scanner,qr-03,LEGITIMATE QR LINK,https://www.google.com,SAFE,QR code encoding safe standard URL
+combined_multi_vector,multi-01,MULTI-VECTOR ATTACK,URGENT: Your account has been suspended due to suspicious activity. Verify KYC immediately at http://paypa1-verification-portal.xyz/login to avoid permanent block.,DANGEROUS,Coordinated campaign: Jamaican toll trap + homoglyph email + phishing URL
+combined_multi_vector,multi-02,CLEAN WORKPLACE NOTICE,Your weekly security summary is ready to review. Log in to your Google Admin console for details.,SAFE,Legitimate enterprise security summary from official channels

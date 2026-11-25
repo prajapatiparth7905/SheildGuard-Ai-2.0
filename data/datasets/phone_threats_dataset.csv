@@ -1,0 +1,19 @@
+phone_number,label,fraud_type,country,risk_level
++18765550199,1,lottery_scam_jamaica,Jamaica,CRITICAL
++18005550143,1,tech_support_toll_free,US,CRITICAL
++919876543210,1,bank_kyc_electricity_fraud,India,HIGH
++12845550188,1,wangiri_bvi_toll_trap,British Virgin Islands,CRITICAL
++447012345678,1,fake_task_whatsapp_scam,UK,HIGH
++23299887766,1,wangiri_sierra_leone,Sierra Leone,CRITICAL
++22466554433,1,wangiri_guinea,Guinea,CRITICAL
++18095550122,1,caribbean_toll_trap_dominican,Dominican Republic,HIGH
++19005550199,1,premium_rate_billing_trap,US,CRITICAL
++15550000000,1,synthetic_spoofed_caller_id,US,HIGH
++12345678901,1,sequential_spoof_pattern,US,HIGH
++16502530000,0,clean_google_headquarters,US,SAFE
++14258828080,0,clean_microsoft_headquarters,US,SAFE
++18002752273,0,official_apple_support,US,SAFE
++18009359935,0,official_chase_customer_service,US,SAFE
++918022221111,0,clean_bangalore_landline,India,SAFE
++442079460912,0,clean_london_business,UK,SAFE
++14155552671,0,clean_california_mobile,US,SAFE

@@ -4,6 +4,7 @@ FastAPI Server & REST API Entrypoint for ShieldGuard AI Cyber Threat Intelligenc
 
 import os
 import time
+import json
 from datetime import datetime
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Query, Request
@@ -15,7 +16,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from app.database import (
     init_db, add_scam_report, get_all_scam_reports, 
     vote_scam_report, get_system_stats, get_analytics_chart_data,
-    get_recent_scan_logs
+    get_recent_scan_logs, clear_scan_logs
 )
 from app.models.schemas import (
     PhoneCheckRequest, PhoneCheckResponse,
@@ -390,11 +391,20 @@ def get_chart_analytics():
 
 
 @app.get("/api/analytics/recent", tags=["System Analytics"])
-def get_recent_scans():
+def get_recent_scans(limit: int = Query(25, ge=1, le=100)):
     """
-    Retrieve live stream of the 10 most recent threat scans.
+    Retrieve live stream of recent threat scans.
     """
-    return get_recent_scan_logs(limit=10)
+    return get_recent_scan_logs(limit=limit)
+
+
+@app.delete("/api/analytics/recent", tags=["System Analytics"])
+def delete_recent_scans():
+    """
+    Explicitly clear scan history logs from the database.
+    """
+    success = clear_scan_logs()
+    return {"status": "success" if success else "error", "message": "Recent scan history cleared."}
 
 
 @app.get("/api/stats", tags=["System Analytics"])
@@ -446,6 +456,54 @@ def vote_report(report_id: int, vote: ReportVoteRequest):
 
 
 # --- API Directory & Configuration ---
+
+@app.get("/api/datasets/samples", tags=["Datasets & Training"])
+def get_sample_test_datasets():
+    """
+    Retrieve structured test samples across all vector scanners for easy testing and tracking.
+    """
+    sample_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "datasets", "sample_test_inputs.json")
+    if os.path.exists(sample_file):
+        with open(sample_file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"error": "Sample datasets not found. Run python download_datasets.py first."}
+
+
+@app.get("/api/datasets/status", tags=["Datasets & Training"])
+def get_dataset_and_models_status():
+    """
+    Check offline status of downloaded datasets and trained ML models.
+    """
+    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "datasets")
+    models_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "models")
+
+    datasets_info = {}
+    if os.path.exists(data_dir):
+        for f in os.listdir(data_dir):
+            fp = os.path.join(data_dir, f)
+            datasets_info[f] = {
+                "size_kb": round(os.path.getsize(fp) / 1024, 2),
+                "modified": datetime.fromtimestamp(os.path.getmtime(fp)).isoformat()
+            }
+
+    models_info = {}
+    if os.path.exists(models_dir):
+        for f in os.listdir(models_dir):
+            fp = os.path.join(models_dir, f)
+            models_info[f] = {
+                "size_kb": round(os.path.getsize(fp) / 1024, 2),
+                "modified": datetime.fromtimestamp(os.path.getmtime(fp)).isoformat()
+            }
+
+    return {
+        "datasets_available": bool(datasets_info),
+        "total_datasets": len(datasets_info),
+        "datasets": datasets_info,
+        "models_available": bool(models_info),
+        "total_models": len(models_info),
+        "models": models_info
+    }
+
 
 @app.get("/api/system/apis", tags=["System Diagnostics"])
 def list_supported_apis():

@@ -85,6 +85,61 @@ Modern cybercrime attacks are increasingly **multi-vector** and **hybrid** in na
 
 ---
 
+## 🧠 Machine Learning Classifiers & Offline Datasets
+
+ShieldGuard AI 2.0 combines **hybrid deterministic heuristics** with **offline machine learning models** trained directly on open-source cybersecurity threat corpuses:
+
+### 1. Vector Scanner & Required Datasets Mapping
+
+| Vector Scanner | Detection Surface | Required Benchmark Dataset | Offline File Location | Record Count |
+| :--- | :--- | :--- | :--- | :--- |
+| **URL Phishing Inspector** (`/api/check/url`) | Brand spoofing, homoglyphs, IP hosts, lure paths | OpenPhish Live Feed + Tranco Top 1M Domains + PhishTank verified samples | `data/datasets/url_phishing_dataset.csv` | **2,300 URLs** |
+| **Message / SMS Scanner** (`/api/check/content`) | Social engineering, KYC block threats, OTP theft | UCI SMS Spam Collection + Banking KYC deception corpus | `data/datasets/sms_spam_dataset.csv` | **5,588 Messages** |
+| **Email Authenticity** (`/api/check/email`) | Disposable burner domains, typosquatting spoofing | Disposable domain blacklist + Corporate typosquatting feeds | `data/datasets/email_threats_dataset.csv` | **Curated Feed** |
+| **Phone & Telecom** (`/api/check/phone`) | Wangiri toll traps, VoIP centers, spoofed repetition | International toll fraud prefixes + Caribbean scam area codes | `data/datasets/phone_threats_dataset.csv` | **Curated Feed** |
+| **Benchmark Test Corpus** | All 6 Vectors (URL, SMS, Email, Phone, QR, Combined) | Labeled Ground-Truth Test Cases with Expected Verdicts | `data/datasets/sample_test_inputs.json` | **Ready-to-Test** |
+
+### 2. Machine Learning Model Architecture & Performance
+
+```
+                           [ Vector Input ]
+                                  │
+          ┌───────────────────────┼───────────────────────┐
+          ▼                       ▼                       ▼
+    [ Web URL ]            [ Message Text ]       [ Email Address ]
+          │                       │                       │
+ [ 18 Lexical Features ]  [ TF-IDF Vectorizer ]   [ 10 Domain Features ]
+          │                       │                       │
+ [ Vectorized Logistic ]  [ Naive Bayes NLP ]     [ Vectorized Logistic ]
+          │                       │                       │
+      81.3% Acc               98.3% Acc               89.2% Acc
+    87.7% Precision         94.0% F1-Score          95.0% Precision
+```
+
+### 3. Downloading Datasets & Retraining Models Offline
+
+All datasets and models run **100% offline** with zero external network or C-compiler requirements:
+
+```bash
+# 1. Download/Refresh offline threat datasets
+python download_datasets.py
+
+# 2. Train and evaluate all Machine Learning models
+python train_models.py
+
+# 3. Run automated verification test suite (15 tests)
+python test_system.py
+```
+
+### 4. Easily Entering Test Details & Tracking Scans
+
+You can easily enter and track test inputs using:
+1. **Interactive UI "Datasets & ML" Modal**: Click the **Datasets & ML** button in the top navigation bar to open all benchmark attack scenarios. Click **"⚡ Test Now"** on any sample to auto-populate and run the scan immediately!
+2. **Offline JSON/CSV Files**: Open `data/datasets/sample_test_inputs.json` or `sample_test_inputs.csv` in Excel or any editor to view ready-to-test inputs for every vector scanner.
+3. **API Endpoint**: `GET /api/datasets/samples` or `GET /api/datasets/status`.
+
+---
+
 ## ⚡ Free APIs & Cost Breakdown ($0 / Month)
 
 ShieldGuard is engineered to operate **100% Free** with no credit card required:
